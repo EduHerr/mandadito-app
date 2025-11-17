@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    form { @apply p-2; }
+
+    label { @apply mb-2 font-bold; }
+
+    input {
+        @apply
+        flex
+        w-full
+        input
+        bg-slate-100
+        border-l-0
+        border-r-0
+        border-t-0
+        border-b-2 
+        border-b-red-500;
+    }
+
+    textarea {
+        @apply
+        w-full
+        h-full
+        bg-slate-100
+        border-l-0
+        border-r-0
+        border-t-0
+        border-b-2 
+        border-b-red-500;
+    }
+
+    button {
+        @apply
+        btn
+        bg-orange-500
+        text-white;
+    }
+
+    span.error-label {
+        @apply
+        text-red-500
+        text-sm
+        italic;
+    }
+
+    table{ 
+        @apply
+        text-center
+        h-full
+        w-full
+        table 
+        table-pin-rows 
+        table-pin-cols;
+    }
+
+    table thead {
+        @apply
+        bg-orange-500
+        text-white
+        ;
+    }
+}
