@@ -1,0 +1,41 @@
+<div class="overflow-x-auto">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        @for(thead of ['producto', 'cantidad', 'c/u']; track thead){
+        <td>{{ thead.toUpperCase() }}</td>
+        }
+        <th>ULT. MODIF.</th>
+        <th>ACCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(products.length > 0){ @for(product of products; track $index){
+      <tr>
+        <th class="w-10">{{ $index + 1 }}</th>
+        <td>{{ product.name }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>${{ product.unit_cost }}</td>
+        <td>{{ dateTime.fromMillis(product.lastUpdated).toRelative() }}</td>
+        <td>
+          @if(!isEdit){
+          <button
+            class="btn btn-xs btn-warning mr-2 text-white"
+            title="Editar"
+            (click)="onEdit(`${product._id}`)"
+          >
+            <i class="bi bi-pencil-fill"></i>
+          </button>
+          <btn-delete (oConfirm)="eDrop(`${product._id}`)"></btn-delete>
+          }
+        </td>
+      </tr>
+      } } @else {
+      <tr>
+        <td colspan="6">Sin productos registrados</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

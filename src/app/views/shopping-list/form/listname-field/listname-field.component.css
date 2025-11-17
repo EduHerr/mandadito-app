@@ -1,0 +1,35 @@
+.name-view {
+    @apply
+    bg-transparent
+    sm:text-4xl
+    text-lg
+    border-none;
+}
+
+.name-edit-wrapper {
+    @apply
+    relative
+    inline-flex
+    items-center;
+}
+
+.name-input {
+    @apply
+    sm:text-4xl
+    text-lg;
+}
+
+.close-btn {
+  position: absolute;
+  right: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  color: #555;
+
+  &:hover {
+    color: #000;
+  }
+}
