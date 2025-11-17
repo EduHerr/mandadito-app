@@ -1,0 +1,16 @@
+<input
+    #inpNumeric
+    [id]="id"
+    type="text"
+    [placeholder]="placeholder"
+    [min]="min"
+    [max]="max"
+    [(ngModel)]="value"
+    (keypress)="allowOnlyNumbers($event)"
+    (keypress)="allowLength($event, inpNumeric)"
+/>
+@if(error && (errorMessage || errorMessage != '')){
+    <span class="error-label">
+        {{ errorMessage }}
+    </span>
+}
