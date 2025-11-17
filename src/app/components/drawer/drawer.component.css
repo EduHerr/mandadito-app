@@ -1,0 +1,26 @@
+label.btn{
+    @apply
+    btn-sm 
+    btn-primary 
+    drawer-button
+    bg-transparent 
+    border-0
+    shadow-md
+    text-black
+    ml-0;
+}
+
+ul.menu{
+    @apply
+    bg-base-200 
+    text-base-content 
+    min-h-[40vh] 
+    md:min-h-full 
+    w-full 
+    md:w-80 
+    p-4 
+    rounded-t-2xl 
+    md:rounded-none 
+    shadow-lg 
+    md:shadow-none;
+}
