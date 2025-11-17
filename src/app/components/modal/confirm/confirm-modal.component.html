@@ -1,0 +1,18 @@
+<dialog #modalConfirm class="modal">
+  <div class="modal-box">
+    <h3>¡Confirmar!</h3>
+    <p>
+      @if(message.trim() == ''){
+        Ejecutaras una tarea que posiblemente sea dificil revertir. ¿Deseas
+      continuar?
+      }
+      @else {
+        {{message}}
+      }
+    </p>
+    <div class="modal-action">
+      <button class="aceptar" (click)="confirm()">Aceptar</button>
+      <button class="cancelar" (click)="show(false)">Cancelar</button>
+    </div>
+  </div>
+</dialog>
