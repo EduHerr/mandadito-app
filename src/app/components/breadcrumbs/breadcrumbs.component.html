@@ -1,0 +1,14 @@
+<div>
+  <ul>
+    @for(item of items; track item.label){
+    <li>
+      <span>
+        @if(item.icon){
+            <i [class]="item.icon"></i>
+        }
+        {{ item.label }}
+      </span>
+    </li>
+    }
+  </ul>
+</div>

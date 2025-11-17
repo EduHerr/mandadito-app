@@ -1,0 +1,7 @@
+div {
+    @apply breadcrumbs text-sm text-black;
+}
+
+li {
+    @apply hover:bg-transparent;
+}
