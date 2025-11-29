@@ -6,12 +6,16 @@ import { IProductSchema } from '@libs/modules/persistent/products/schema';
 import { ProductService } from '@libs/modules/persistent/products/service';
 import { ToastService } from '@libs/utils/sevices/toast/service';
 import { EToastType } from '@components/toast/toast.component';
+import { ShoppingListaService } from '@libs/modules/persistent/shopping-list/service';
 
 @Component({
   standalone: true,
   imports: [FormShoppingList, BreadCrumbs, TableShoppingList],
   selector: 'app-shopping-list',
-  providers: [ProductService],
+  providers: [
+    ProductService,
+    ShoppingListaService
+  ],
   templateUrl: './shopping-list.component.html',
 })
 export class ShoppingListView implements OnInit {
@@ -22,21 +26,32 @@ export class ShoppingListView implements OnInit {
 
   constructor(
     private readonly productService: ProductService,
+    private readonly shoppinListService: ShoppingListaService,
     private readonly toastService: ToastService
   ){}
 
   async ngOnInit(): Promise<void> {
-    this.items = await this.productService.get() || [];
-    this.items.forEach(item => { this.formComponent.totalCost += item.totalCost ?? 0; }); //TotalCost
+    //Extraer datos del cache
   }
 
-  saveShoppingList() {
+  async saveShoppingList() {
     //Validar si hay [productos] en la lista
     if(!(this.items.length > 0)){
       this.toastService.show({ type: EToastType.ERROR, text: 'Agrega productos a la lista antes de guardar', duration: 3000});
     }
 
-    //
+    //Get data
+    const added = await this.shoppinListService.add({alias: "", products: this.items})
+    if(!added){
+      this.toastService.show({ type: EToastType.ERROR, text: 'Error al intentar guardar la lista de compras', duration: 3000});
+    }
+
+    this.toastService.show({ type: EToastType.SUCCESS, text: 'Lista de Compras agregada con exito', duration: 3000});
+
+    //Clear everything
+    this.formComponent.fShoppingList.reset(); //Form
+    this.formComponent.totalCost = 0;
+    this.items = []; //Table | List
   }
 
   addProduct(item: IProductSchema) {

@@ -17,7 +17,7 @@
         <td>{{ product.name }}</td>
         <td>{{ product.quantity }}</td>
         <td>${{ product.unit_cost }}</td>
-        <td>{{ dateTime.fromMillis(product.lastUpdated).toRelative() }}</td>
+        <td>{{ dateTime.fromMillis(product.lastUpdated ?? 0).toRelative() }}</td>
         <td>
           @if(!isEdit){
           <button
