@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,12 +23,14 @@ import { ListNameField } from './listname-field/listname-field.component';
     ProductService
   ],
   templateUrl: './form-shopping-list.component.html',
+  styleUrls: ['./form-shopping-list.component.css'],
 })
 export class FormShoppingList implements OnInit {
   @Output() oSave: EventEmitter<void> = new EventEmitter<void>();
   @Output() oAddProduct: EventEmitter<IProductSchema> = new EventEmitter<IProductSchema>();
   @Output() oUpdateProduct: EventEmitter<IProductSchema> = new EventEmitter<IProductSchema>();
   @ViewChildren(NumericFieldComponent) numericFields!: QueryList<NumericFieldComponent>;
+  @ViewChild(ListNameField) lstNameField!: ListNameField;
   
   fShoppingList!: FormGroup;
   totalCost: number = 0;
@@ -59,6 +61,7 @@ export class FormShoppingList implements OnInit {
           Validators.maxLength(1000),
         ],
       ],
+      isPromo: [false]
     });
   }
 

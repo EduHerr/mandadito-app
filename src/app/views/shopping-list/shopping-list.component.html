@@ -1,16 +1,19 @@
-<breadcrumbs [items]="[{ 
-    label: 'Lista de Compras', 
-    icon: 'bi bi-card-list' 
-}]"></breadcrumbs>
-<form-shopping-list
-    (oAddProduct)="addProduct($event)"
-    (oSave)="saveShoppingList()"
-    (oUpdateProduct)="updateProduct($event)"
-></form-shopping-list>
-<div class="py-2">
+<div class="flex flex-col flex-1 min-h-0 animate-fade-in-up">
+  <!-- Form: se mantiene fijo arriba -->
+  <div class="flex-shrink-0">
+    <form-shopping-list
+      (oAddProduct)="addProduct($event)"
+      (oSave)="id === null ? saveShoppingList() : updateShoppingList()"
+      (oUpdateProduct)="updateProduct($event)"
+    ></form-shopping-list>
+  </div>
+
+  <!-- Products list: scrollea independientemente -->
+  <div class="flex-1 overflow-y-auto mt-4 -mx-1 px-1">
     <table-shopping-list
-        (oDelete)="drop($event)"
-        (oEdit)="edit($event)"
-        [products]="items"
+      (oDelete)="drop($event)"
+      (oEdit)="edit($event)"
+      [products]="items"
     ></table-shopping-list>
+  </div>
 </div>

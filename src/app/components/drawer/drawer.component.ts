@@ -11,7 +11,7 @@ import { menuOptions } from "@layouts/app/menu/static";
     standalone: true,
     selector: "drawer",
     templateUrl: "./drawer.component.html",
-    styleUrl: "./drawer.component.css",
+    styleUrls: ["./drawer.component.css"],
 })
 export class Drawer {
     mItems = menuOptions;

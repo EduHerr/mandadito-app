@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { DateTime } from "luxon";
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,13 +6,13 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   selector: 'listname-field',
   templateUrl: './listname-field.component.html',
-  styleUrl: './listname-field.component.css',
+  styleUrls: ['./listname-field.component.css'],
 })
 export class ListNameField {
-  name = `Unknamed${DateTime.now().toMillis()}`;          // default or placeholder
-  editing = false;           // toggles edit mode
-  tempName = '';             // holds temporary edit
-  
+  name = 'Mi Lista';
+  editing = false;
+  tempName = '';
+
   @ViewChild('nameInput') nameInput!: ElementRef<HTMLInputElement>;
 
   startEdit(): void {

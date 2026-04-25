@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Menu } from './menu/menu.component';
+import { Dock } from '@components/dock/dock.component';
 import { ToastComponent } from '@components/toast/toast.component';
 import { ToastService } from '@libs/utils/sevices/toast/service';
 
 @Component({
-  imports: [Menu, RouterModule, ToastComponent],
+  imports: [Dock, RouterModule, ToastComponent],
   standalone: true,
   selector: 'app-layout',
   providers: [ToastService],

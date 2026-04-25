@@ -1,9 +1,21 @@
 .name-view {
     @apply
-    bg-transparent
-    sm:text-4xl
-    text-lg
-    border-none;
+    inline-flex items-center gap-2
+    text-xl sm:text-2xl
+    font-bold text-stone-800
+    cursor-pointer
+    py-1 px-2
+    rounded-lg
+    hover:bg-orange-50
+    transition-all duration-200;
+}
+
+.edit-hint {
+    @apply text-xs text-orange-300 transition-colors;
+}
+
+.name-view:hover .edit-hint {
+    @apply text-orange-500;
 }
 
 .name-edit-wrapper {
@@ -15,21 +27,12 @@
 
 .name-input {
     @apply
-    sm:text-4xl
-    text-lg;
-}
-
-.close-btn {
-  position: absolute;
-  right: 4px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 0;
-  color: #555;
-
-  &:hover {
-    color: #000;
-  }
+    text-xl sm:text-2xl
+    font-bold text-stone-800
+    border-b-2 border-orange-400
+    bg-transparent
+    py-1 px-2
+    rounded-none
+    focus:border-orange-500 focus:ring-0
+    outline-none;
 }

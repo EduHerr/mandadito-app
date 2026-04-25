@@ -1,21 +1,26 @@
-<form class="border border-red-500" [formGroup]="fShoppingList">
-  <div class="grid grid-rows-5 gap-2 py-5">
-    <div class="grid grid-cols-2">
-      <div class="flex justify-start">
-        <listname-field></listname-field>
-      </div>
-      <div class="flex justify-end">
-        <span class="italic text-sm">
-          Costo total:
-          <span class="text-4xl">${{ totalCost | number : "1.0-2" }}</span>
-        </span>
-      </div>
+<form [formGroup]="fShoppingList" class="form-card">
+  <!-- Header: Name + Total -->
+  <div class="form-header">
+    <listname-field></listname-field>
+    <div class="total-badge">
+      <span class="total-label">Total</span>
+      <span class="total-amount">${{ totalCost | number : "1.0-2" }}</span>
     </div>
-    <div class="form-control col-span-auto">
-      <input type="text" placeholder="Producto" formControlName="name" />
+  </div>
+
+  <!-- Product name -->
+  <div class="form-control">
+    <div class="input-group">
+      <i class="bi bi-tag input-icon"></i>
+      <input type="text" placeholder="Nombre del producto" formControlName="name" />
     </div>
-    <div class="grid grid-cols-5 gap-2">
-      <div class="form-control col-span-3">
+  </div>
+
+  <!-- Quantity + Unit cost -->
+  <div class="grid grid-cols-2 gap-3">
+    <div class="form-control">
+      <div class="input-group">
+        <i class="bi bi-hash input-icon"></i>
         <numeric-field
           #cantiadadField
           [id]="'cantiadadField'"
@@ -24,47 +29,68 @@
           [placeholder]="'Cantidad'"
         ></numeric-field>
       </div>
-      <div class="form-control col-span-2">
+    </div>
+    <div class="form-control">
+      <div class="input-group">
+        <i class="bi bi-currency-dollar input-icon"></i>
         <numeric-field
           #unitCostField
           [id]="'unitCostField'"
           [min]="1"
           [max]="100000"
-          [placeholder]="'Costo unitario'"
+          [placeholder]="'Precio'"
         ></numeric-field>
       </div>
     </div>
-    <div class="form-control">
-      <textarea
-        placeholder="Descripción del producto"
-        formControlName="description"
-      ></textarea>
-    </div>
-    <div class="grid grid-cols-2 pt-4">
-      <button
-        class="rounded-full btn-sm text-lg"
-        title="Guardar"
-        (click)="onSave()"
-      >
-        <i class="bi bi-floppy2-fill"></i>
-      </button>
-      @if(!editMode){
-      <button
-        class="rounded-full btn-sm text-lg"
-        title="Agregar"
-        (click)="onAdd()"
-      >
-        <i class="bi bi-plus"></i>
-      </button>
-      } @else{
-      <button
-        class="rounded-full btn-sm text-lg"
-        title="Actualizar"
-        (click)="onUpdate()"
-      >
-        <i class="bi bi-arrow-bar-up"></i>
-      </button>
-      }
-    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="form-control">
+    <textarea
+      placeholder="Nota o descripción (opcional)"
+      formControlName="description"
+      rows="2"
+    ></textarea>
+  </div>
+
+  <!-- Promo Toggle -->
+  <label class="promo-toggle group">
+    <input type="checkbox" formControlName="isPromo" class="promo-checkbox peer" />
+    <span class="promo-label">Marcar como promoción (Ofertas, 3x2)</span>
+    <i class="bi bi-tag-fill promo-icon"></i>
+  </label>
+
+  <!-- Actions -->
+  <div class="form-actions">
+    <button
+      type="button"
+      class="btn-save"
+      title="Guardar lista"
+      (click)="onSave()"
+    >
+      <i class="bi bi-floppy-fill"></i>
+      <span>Guardar</span>
+    </button>
+    @if(!editMode){
+    <button
+      type="button"
+      class="btn-add"
+      title="Agregar producto"
+      (click)="onAdd()"
+    >
+      <i class="bi bi-plus-lg"></i>
+      <span>Agregar</span>
+    </button>
+    } @else{
+    <button
+      type="button"
+      class="btn-update"
+      title="Actualizar producto"
+      (click)="onUpdate()"
+    >
+      <i class="bi bi-check-lg"></i>
+      <span>Actualizar</span>
+    </button>
+    }
   </div>
 </form>

@@ -1,37 +1,83 @@
-div.modal-box {
-    @apply bg-white;
+dialog.modal {
+  @apply
+    fixed inset-0
+    flex items-center justify-center
+    bg-transparent
+    p-4;
 }
 
-h3 {
-    @apply text-lg font-bold text-gray-400;
+dialog.modal::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-p {
-    @apply
-    py-4
-    text-left;
+.modal-overlay {
+  @apply fixed inset-0;
 }
 
-button {
-    @apply btn-lg btn-ghost font-semibold;
+.modal-card {
+  @apply
+    relative
+    bg-white
+    rounded-2xl
+    p-6
+    w-full max-w-sm
+    shadow-xl
+    text-center
+    z-10;
 }
 
-button.aceptar {
-    @apply
-    bg-orange-400
-    hover:bg-red-500
-    text-white;
+.modal-icon-wrapper {
+  @apply
+    flex items-center justify-center
+    w-14 h-14
+    mx-auto
+    mb-4
+    bg-orange-50
+    rounded-full;
 }
 
-button.cancelar {
-    @apply
-    bg-base-200
-    text-black;
+.modal-title {
+  @apply
+    text-lg font-bold
+    text-stone-800
+    mb-2;
 }
 
-div.modal-action{
-    @apply
-    flex
-    justify-center
-    items-center;
+.modal-message {
+  @apply
+    text-sm text-stone-500
+    leading-relaxed
+    mb-6;
+}
+
+.modal-actions {
+  @apply
+    flex gap-3
+    justify-center;
+}
+
+button.btn-cancel {
+  @apply
+    flex-1
+    py-2.5
+    bg-stone-100 hover:bg-stone-200
+    text-stone-600
+    font-semibold
+    rounded-xl
+    border-0
+    transition-all duration-200;
+}
+
+button.btn-confirm {
+  @apply
+    flex-1
+    py-2.5
+    bg-orange-500 hover:bg-orange-600
+    text-white
+    font-semibold
+    rounded-xl
+    border-0
+    transition-all duration-200;
 }

@@ -3,20 +3,17 @@ import { IMenuItem } from './types';
 export const menuOptions: IMenuItem[] = [
   { 
     label: 'Inicio', 
-    icon: 'bi bi-house-door', 
+    icon: 'bi bi-house-door-fill', 
     route: '/',
-    isActive: false
   },
   {
-    label: 'Despensa',
-    icon: 'bi bi-cart',
-    route: '/larder',
-    isActive: true
+    label: 'Histórico',
+    icon: 'bi bi-clock-history',
+    route: '/historical',
   },
   { 
-    label: 'Lista', 
-    icon: 'bi bi-card-list',
+    label: 'Nueva Lista', 
+    icon: 'bi bi-cart-plus-fill',
     route: '/shopping-list',
-    isActive: false
   },
 ];

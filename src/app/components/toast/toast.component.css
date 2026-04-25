@@ -1,8 +1,59 @@
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.2s ease-out;
+@keyframes slide-out-right {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(24px); }
 }
+
+@keyframes progress-shrink {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+.toast-wrapper {
+  @apply
+    fixed top-5 right-4 left-4 sm:left-auto sm:w-80
+    z-50
+    rounded-xl
+    overflow-hidden
+    shadow-lg
+    cursor-pointer;
+  animation: slide-in-right 0.3s ease-out both;
+}
+
+.toast-wrapper.closing {
+  animation: slide-out-right 0.25s ease-in both;
+}
+
+.toast-body {
+  @apply
+    flex items-center gap-3
+    px-4 py-3
+    text-white;
+}
+
+.toast-icon {
+  @apply text-lg flex-shrink-0;
+}
+
+.toast-text {
+  @apply text-sm font-medium leading-snug;
+}
+
+/* ── Type Colors ── */
+.toast-success { @apply bg-orange-500; }
+.toast-error   { @apply bg-red-500; }
+.toast-info    { @apply bg-amber-500; }
+
+/* ── Progress Bar ── */
+.toast-progress {
+  @apply h-0.5;
+  animation: progress-shrink linear both;
+}
+
+.progress-success { @apply bg-orange-300; }
+.progress-error   { @apply bg-red-300; }
+.progress-info    { @apply bg-amber-300; }

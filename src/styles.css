@@ -2,64 +2,174 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    form { @apply p-2; }
-
-    label { @apply mb-2 font-bold; }
-
-    input {
-        @apply
-        flex
-        w-full
-        input
-        bg-slate-100
-        border-l-0
-        border-r-0
-        border-t-0
-        border-b-2 
-        border-b-red-500;
-    }
-
-    textarea {
-        @apply
-        w-full
-        h-full
-        bg-slate-100
-        border-l-0
-        border-r-0
-        border-t-0
-        border-b-2 
-        border-b-red-500;
-    }
-
-    button {
-        @apply
-        btn
-        bg-orange-500
-        text-white;
-    }
-
-    span.error-label {
-        @apply
-        text-red-500
-        text-sm
-        italic;
-    }
-
-    table{ 
-        @apply
-        text-center
-        h-full
-        w-full
-        table 
-        table-pin-rows 
-        table-pin-cols;
-    }
-
-    table thead {
-        @apply
-        bg-orange-500
-        text-white
-        ;
-    }
+/* ── Design Tokens ── */
+:root {
+  --mandado-primary: #f97316;
+  --mandado-primary-dark: #ea580c;
+  --mandado-accent: #f59e0b;
+  --mandado-surface: #fff7ed;
+  --mandado-surface-alt: #fef3c7;
+  --mandado-text: #1c1917;
+  --mandado-text-muted: #78716c;
+  --mandado-danger: #ef4444;
+  --mandado-radius: 1rem;
 }
+
+@layer base {
+  body {
+    @apply bg-orange-50 text-stone-900 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* ── Angular router host elements need full height for flex layouts ── */
+router-outlet + * {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+@layer components {
+  /* ── Forms ── */
+  form {
+    @apply p-3;
+  }
+
+  label {
+    @apply mb-1 text-sm font-semibold text-stone-600;
+  }
+
+  input {
+    @apply
+      flex w-full
+      input
+      bg-white bg-opacity-80
+      border border-orange-200
+      rounded-xl
+      text-stone-800
+      placeholder:text-stone-400
+      transition-all duration-200
+      focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none;
+  }
+
+  textarea {
+    @apply
+      w-full
+      bg-white bg-opacity-80
+      border border-orange-200
+      rounded-xl
+      p-3
+      text-stone-800
+      placeholder:text-stone-400
+      transition-all duration-200
+      focus:border-orange-400 focus:ring-2 focus:ring-orange-200 focus:outline-none;
+  }
+
+  button {
+    @apply
+      btn
+      bg-orange-500
+      hover:bg-orange-600
+      active:scale-[0.97]
+      text-white
+      border-0
+      rounded-xl
+      font-semibold
+      transition-all duration-200
+      shadow-sm;
+  }
+
+  span.error-label {
+    @apply
+      text-red-500
+      text-xs
+      italic
+      mt-1;
+  }
+
+  /* ── Tables (desktop fallback) ── */
+  table {
+    @apply
+      text-center
+      h-full w-full
+      table
+      table-pin-rows table-pin-cols;
+  }
+
+  table thead {
+    @apply
+      bg-gradient-to-r from-orange-500 to-orange-600
+      text-white;
+  }
+
+  table thead th,
+  table thead td {
+    @apply text-xs uppercase tracking-wider font-semibold py-3;
+  }
+
+  table tbody tr {
+    @apply
+      hover:bg-orange-50
+      transition-colors duration-150;
+  }
+
+  table tbody td,
+  table tbody th {
+    @apply py-3 text-sm text-stone-700;
+  }
+}
+
+/* ── Utility Animations ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-out-right {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(24px); }
+}
+
+@keyframes progress-shrink {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fade-in-up 0.35s ease-out both;
+  }
+  .animate-fade-in {
+    animation: fade-in 0.25s ease-out both;
+  }
+  .animate-scale-in {
+    animation: scale-in 0.25s ease-out both;
+  }
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out both;
+  }
+  .animate-slide-out-right {
+    animation: slide-out-right 0.25s ease-in both;
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #fdba74; border-radius: 999px; }

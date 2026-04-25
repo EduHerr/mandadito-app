@@ -1,10 +1,20 @@
 {
-  "name": "mandado",
-  "short_name": "mandado",
+  "name": "Mandadito — Lista de Compras",
+  "short_name": "Mandadito",
+  "description": "Organiza tus compras del mandado de forma rápida y sin conexión.",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "theme_color": "#f97316",
+  "background_color": "#fff7ed",
+  "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "logo.jpg",
+      "sizes": "192x192 512x512 1024x1024",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    },
     {
       "src": "icons/icon-72x72.png",
       "sizes": "72x72",

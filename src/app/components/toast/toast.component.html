@@ -1,14 +1,25 @@
 @if(toast){
-<div class="fixed top-5 right-5 z-50 transition-all duration-300">
-  <div
-    class="px-4 py-3 rounded-lg shadow-lg text-white animate-fade-in"
-    [ngClass]="{
-      'bg-orange-300': toast.type === 'success',
-      'bg-red-600': toast.type === 'error',
-      'bg-blue-600': toast.type === 'info'
-    }"
-  >
-    {{ toast.text }}
+<div
+  class="toast-wrapper"
+  [class.closing]="closing"
+  (click)="dismiss()"
+>
+  <div class="toast-body" [ngClass]="{
+    'toast-success': toast.type === 'success',
+    'toast-error': toast.type === 'error',
+    'toast-info': toast.type === 'info'
+  }">
+    <i [class]="icon" class="toast-icon"></i>
+    <span class="toast-text">{{ toast.text }}</span>
   </div>
+  <div
+    class="toast-progress"
+    [ngClass]="{
+      'progress-success': toast.type === 'success',
+      'progress-error': toast.type === 'error',
+      'progress-info': toast.type === 'info'
+    }"
+    [style.animation-duration.ms]="duration"
+  ></div>
 </div>
 }

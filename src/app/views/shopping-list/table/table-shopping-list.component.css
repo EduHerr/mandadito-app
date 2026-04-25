@@ -1,0 +1,125 @@
+.product-list {
+    @apply flex flex-col gap-2;
+}
+
+.product-card {
+    @apply
+    flex items-center justify-between
+    bg-white
+    rounded-xl
+    p-3.5
+    shadow-sm
+    border border-orange-50
+    transition-all duration-200
+    hover:shadow-md hover:border-orange-100;
+}
+
+/* Promo card styling */
+.product-card.product-promo {
+    @apply border-red-200 bg-red-50/40 relative overflow-hidden;
+}
+
+.product-card.product-promo::before {
+    content: '';
+    @apply absolute top-0 left-0 w-1 h-full bg-red-500;
+}
+
+.product-info {
+    @apply flex flex-col gap-1 flex-1 min-w-0;
+}
+
+.product-header {
+    @apply flex items-center justify-between gap-2;
+}
+
+.product-name {
+    @apply
+    font-semibold text-stone-800
+    text-sm
+    truncate;
+}
+
+.promo-badge {
+    @apply 
+    inline-flex items-center gap-1 
+    ml-2 px-1.5 py-px 
+    bg-red-100 text-red-600 
+    text-[10px] font-bold uppercase tracking-wider 
+    rounded;
+}
+
+.promo-badge i {
+    @apply text-red-500 text-[9px];
+}
+
+.product-total {
+    @apply
+    font-bold text-orange-500
+    text-sm
+    flex-shrink-0;
+}
+
+.product-meta {
+    @apply
+    flex items-center flex-wrap
+    gap-1
+    text-xs text-stone-400;
+}
+
+.meta-item {
+    @apply flex items-center gap-0.5;
+}
+
+.meta-item i {
+    @apply text-orange-300;
+}
+
+.meta-divider {
+    @apply text-stone-300;
+}
+
+.meta-time {
+    @apply text-stone-300 italic;
+}
+
+.product-actions {
+    @apply
+    flex items-center gap-1.5
+    ml-3
+    flex-shrink-0;
+}
+
+.action-btn {
+    @apply
+    w-8 h-8
+    flex items-center justify-center
+    rounded-lg
+    text-sm
+    border-0
+    transition-all duration-200
+    active:scale-90;
+}
+
+button.edit-btn {
+    @apply bg-amber-50 text-amber-600 hover:bg-amber-100;
+}
+
+/* ── Empty State ── */
+.empty-state {
+    @apply
+    flex flex-col items-center
+    text-center
+    py-10 px-6;
+}
+
+.empty-icon {
+    @apply text-5xl text-orange-200 mb-3;
+}
+
+.empty-title {
+    @apply text-base font-semibold text-stone-500 mb-1;
+}
+
+.empty-subtitle {
+    @apply text-xs text-stone-400 max-w-xs;
+}

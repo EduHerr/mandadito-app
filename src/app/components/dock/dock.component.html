@@ -1,12 +1,12 @@
-<div class="dock dock-sm bg-orange-900 font-bold">
-  @for(itemMenu of mItems; track itemMenu){
-    <button
-      class="border-0"
-      [routerLink]="itemMenu.route"
-      [ngClass]="{'dock-active': itemMenu?.isActive}"
+<nav class="dock-nav">
+  @for(item of mItems; track item.route){
+    <a
+      [routerLink]="item.route"
+      class="dock-item"
+      [class.active]="isActive(item.route)"
     >
-      <i [ngClass]="itemMenu.icon"></i>
-      <span class="dock-label">{{ itemMenu.label }}</span>
-    </button>
+      <i [class]="item.icon" class="dock-icon"></i>
+      <span class="dock-label">{{ item.label }}</span>
+    </a>
   }
-</div>
+</nav>

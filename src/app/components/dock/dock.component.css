@@ -1,0 +1,48 @@
+.dock-nav {
+    @apply
+    fixed bottom-0 left-0 right-0
+    flex justify-around items-center
+    px-2 py-2
+    bg-white bg-opacity-90 backdrop-blur-xl
+    border-t border-orange-100
+    shadow-[0_-4px_20px_rgba(0,0,0,0.06)]
+    z-50;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.dock-item {
+    @apply
+    flex flex-col items-center justify-center
+    gap-0.5
+    py-1.5 px-3
+    rounded-xl
+    text-stone-400
+    no-underline
+    transition-all duration-200
+    active:scale-95;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dock-item.active {
+    @apply text-orange-500;
+}
+
+.dock-item.active .dock-icon {
+    @apply
+    bg-orange-100
+    rounded-full
+    px-3 py-1;
+}
+
+.dock-icon {
+    @apply
+    text-xl
+    transition-all duration-200;
+}
+
+.dock-label {
+    @apply
+    text-[10px]
+    font-semibold
+    tracking-wide;
+}

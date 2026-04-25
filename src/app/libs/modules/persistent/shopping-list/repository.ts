@@ -1,12 +1,12 @@
 import { db } from "@libs/modules/db/db";
 import { Repository } from "@libs/modules/db/repository/repository";
-import { IProductSchema } from "./schema";
-import { IProductRepository } from "./adapter";
+import { IShoppingListSchema } from "./schema";
+import { IShoppingListRepository } from "./adapter";
 
-export class ProductRepository extends Repository<IProductSchema, string> implements IProductRepository {
+export class ShoppinListRepository extends Repository<IShoppingListSchema, string> implements IShoppingListRepository {
   constructor() {
-    super(db.products);
+    super(db.shoppingList);
   }
 }
 
-export const productRepository = new ProductRepository();
+export const shoppingListRepository = new ShoppinListRepository();
