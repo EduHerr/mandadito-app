@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeleteButton } from '@components/button/delete/delete-button.component';
 import { IShoppingListSchema } from '@libs/modules/persistent/shopping-list/schema';
@@ -15,6 +15,8 @@ import { DateTime } from 'luxon';
 export class TableHistorical {
   @Input() shoppingLists: IShoppingListSchema[] = [];
 
+  @Output() oDelete = new EventEmitter<string>();
+
   constructor(
     private readonly router: Router
   ){}
@@ -26,7 +28,7 @@ export class TableHistorical {
   }
 
   drop(id: string){
-    // TODO: implement delete
+    this.oDelete.emit(id);
   }
 
   onEdit(id: string){
