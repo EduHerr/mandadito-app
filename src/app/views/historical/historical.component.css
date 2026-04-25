@@ -1,0 +1,18 @@
+.historical-container {
+    @apply flex flex-col gap-4;
+}
+
+.historical-header {
+    @apply flex items-center justify-between;
+}
+
+.page-title {
+    @apply
+    flex items-center gap-2
+    text-xl font-bold
+    text-stone-800;
+}
+
+.title-icon {
+    @apply text-orange-400;
+}

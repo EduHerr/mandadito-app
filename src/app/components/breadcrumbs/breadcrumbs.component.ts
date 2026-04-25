@@ -5,7 +5,7 @@ import { IBreadCrumbItem } from "./types";
     standalone: true,
     selector: "breadcrumbs",
     templateUrl: "./breadcrumbs.component.html",
-    styleUrl: "./breadcrumbs.component.css"
+    styleUrls: ["./breadcrumbs.component.css"]
 })
 export class BreadCrumbs{
     @Input() items!: IBreadCrumbItem[];

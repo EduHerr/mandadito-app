@@ -4,7 +4,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@
     standalone: true,
     selector: "confirm-modal",
     templateUrl: "./confirm-modal.component.html",
-    styleUrl: "./confirm-modal.component.css"
+    styleUrls: ["./confirm-modal.component.css"]
 })
 export class ConfirmModal{
     @Input() message: string = '';

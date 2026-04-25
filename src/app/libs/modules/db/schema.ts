@@ -1,3 +1,4 @@
 export interface IBaseSchema {
-    lastUpdated: number;
+    _id?: string;
+    lastUpdated?: number;
 }

@@ -16,11 +16,11 @@ ul.menu{
     text-base-content 
     min-h-[40vh] 
     md:min-h-full 
-    w-full 
+    md:rounded-none 
     md:w-80 
+    md:shadow-none
+    w-full 
     p-4 
     rounded-t-2xl 
-    md:rounded-none 
-    shadow-lg 
-    md:shadow-none;
+    shadow-lg;
 }

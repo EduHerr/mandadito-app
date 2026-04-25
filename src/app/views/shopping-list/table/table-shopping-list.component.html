@@ -1,41 +1,56 @@
-<div class="overflow-x-auto">
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        @for(thead of ['producto', 'cantidad', 'c/u']; track thead){
-        <td>{{ thead.toUpperCase() }}</td>
-        }
-        <th>ULT. MODIF.</th>
-        <th>ACCIONES</th>
-      </tr>
-    </thead>
-    <tbody>
-      @if(products.length > 0){ @for(product of products; track $index){
-      <tr>
-        <th class="w-10">{{ $index + 1 }}</th>
-        <td>{{ product.name }}</td>
-        <td>{{ product.quantity }}</td>
-        <td>${{ product.unit_cost }}</td>
-        <td>{{ dateTime.fromMillis(product.lastUpdated ?? 0).toRelative() }}</td>
-        <td>
-          @if(!isEdit){
-          <button
-            class="btn btn-xs btn-warning mr-2 text-white"
-            title="Editar"
-            (click)="onEdit(`${product._id}`)"
-          >
-            <i class="bi bi-pencil-fill"></i>
-          </button>
-          <btn-delete (oConfirm)="eDrop(`${product._id}`)"></btn-delete>
+<!-- Mobile: Cards / Desktop: Table -->
+<div class="product-list">
+  @if(products.length > 0){
+    @for(product of products; track $index){
+    <div class="product-card animate-fade-in-up" [class.product-promo]="product.isPromo" [style.animation-delay.ms]="$index * 50">
+      <div class="product-info">
+        <div class="product-header">
+          <span class="product-name">
+            {{ product.name }}
+            @if(product.isPromo){
+              <span class="promo-badge"><i class="bi bi-tag-fill"></i> Oferta</span>
+            }
+          </span>
+          <span class="product-total">${{ product.totalCost | number:'1.0-2' }}</span>
+        </div>
+        <div class="product-meta">
+          <span class="meta-item">
+            <i class="bi bi-box"></i>
+            {{ product.quantity }} uds.
+          </span>
+          <span class="meta-divider">·</span>
+          <span class="meta-item">
+            <i class="bi bi-currency-dollar"></i>
+            {{ product.unit_cost }} c/u
+          </span>
+          @if(product.lastUpdated){
+          <span class="meta-divider">·</span>
+          <span class="meta-item meta-time">
+            {{ dateTime.fromMillis(product.lastUpdated).toRelative() }}
+          </span>
           }
-        </td>
-      </tr>
-      } } @else {
-      <tr>
-        <td colspan="6">Sin productos registrados</td>
-      </tr>
-      }
-    </tbody>
-  </table>
+        </div>
+      </div>
+      <div class="product-actions">
+        @if(!isEdit){
+        <button
+          type="button"
+          class="action-btn edit-btn"
+          title="Editar"
+          (click)="onEdit(`${product._id}`)"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+        <btn-delete (oConfirm)="eDrop(`${product._id}`)"></btn-delete>
+        }
+      </div>
+    </div>
+    }
+  } @else {
+  <div class="empty-state">
+    <i class="bi bi-bag-plus empty-icon"></i>
+    <p class="empty-title">Sin productos aún</p>
+    <p class="empty-subtitle">Agrega productos usando el formulario de arriba</p>
+  </div>
+  }
 </div>

@@ -1,0 +1,173 @@
+.home-container {
+}
+
+/* ── Header ── */
+.home-header {
+    @apply
+    flex flex-col items-center
+    text-center
+    pt-6 pb-2;
+}
+
+.greeting-emoji {
+    @apply text-5xl mb-2;
+}
+
+.greeting {
+    @apply
+    text-2xl font-bold
+    text-stone-800;
+}
+
+.subtitle {
+    @apply
+    text-sm text-stone-500
+    mt-1;
+}
+
+/* ── Stats Card ── */
+.stats-card {
+    @apply
+    flex items-center justify-around
+    bg-white rounded-2xl
+    p-4
+    shadow-sm
+    border border-orange-100;
+}
+
+.stat-item {
+    @apply
+    flex flex-col items-center
+    gap-1;
+}
+
+.stat-item.clickable {
+    @apply cursor-pointer active:scale-95 transition-transform;
+}
+
+.stat-number {
+    @apply
+    text-3xl font-bold
+    text-orange-500;
+}
+
+.stat-label {
+    @apply text-xs text-stone-500 font-medium;
+}
+
+.stat-icon {
+    @apply text-2xl text-orange-400;
+}
+
+.stat-divider {
+    @apply w-px h-10 bg-orange-100;
+}
+
+/* ── FAB ── */
+.fab-new-list {
+    @apply
+    w-full
+    flex items-center justify-center gap-2
+    py-3.5
+    bg-gradient-to-r from-orange-500 to-orange-600
+    hover:from-orange-600 hover:to-orange-700
+    text-white text-base font-semibold
+    rounded-2xl
+    shadow-lg shadow-orange-200
+    active:scale-[0.97]
+    transition-all duration-200;
+}
+
+.fab-new-list i {
+    @apply text-xl;
+}
+
+/* ── Recent Section ── */
+.recent-section {
+    @apply flex flex-col gap-3;
+}
+
+.section-title {
+    @apply
+    text-sm font-semibold
+    text-stone-500
+    uppercase tracking-wider
+    px-1;
+}
+
+.recent-grid {
+    @apply flex flex-col gap-2.5;
+}
+
+.recent-card {
+    @apply
+    bg-white rounded-2xl
+    p-4
+    shadow-sm
+    border border-orange-50
+    cursor-pointer
+    active:scale-[0.98]
+    transition-all duration-200
+    hover:border-orange-200 hover:shadow-md;
+}
+
+.recent-card-header {
+    @apply
+    flex items-center justify-between
+    mb-2;
+}
+
+.recent-alias {
+    @apply
+    font-semibold text-stone-800
+    text-base;
+}
+
+.recent-card-body {
+    @apply
+    flex items-center justify-between
+    text-sm;
+}
+
+.recent-meta {
+    @apply
+    flex items-center gap-1.5
+    text-stone-500;
+}
+
+.recent-meta i {
+    @apply text-orange-400;
+}
+
+.recent-total {
+    @apply
+    font-bold text-orange-600
+    text-base;
+}
+
+/* ── Empty State ── */
+.empty-state {
+    @apply
+    flex flex-col items-center
+    text-center
+    py-12 px-6;
+}
+
+.empty-icon {
+    @apply
+    text-6xl text-orange-200
+    mb-4;
+}
+
+.empty-title {
+    @apply
+    text-lg font-semibold
+    text-stone-600
+    mb-1;
+}
+
+.empty-subtitle {
+    @apply
+    text-sm text-stone-400
+    max-w-xs;
+}

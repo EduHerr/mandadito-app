@@ -6,4 +6,5 @@ export interface IProductSchema extends IBaseSchema {
     unit_cost: number;
     description?: string;
     totalCost?: number;
+    isPromo?: boolean;
 }

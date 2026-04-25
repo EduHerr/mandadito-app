@@ -8,6 +8,7 @@ import { ConfirmModal } from "@components/modal/confirm/confirm-modal.component"
     standalone: true,
     selector: 'btn-delete',
     templateUrl: './delete-button.component.html',
+    styleUrls: ['./delete-button.component.css'],
 })
 export class DeleteButton{
     @Output() oConfirm = new EventEmitter<void>();

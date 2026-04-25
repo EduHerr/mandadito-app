@@ -1,0 +1,12 @@
+button.action-btn.delete-btn {
+    @apply
+    w-8 h-8
+    flex items-center justify-center
+    rounded-lg
+    text-sm
+    border-0
+    bg-red-50 text-red-500
+    hover:bg-red-100
+    transition-all duration-200
+    active:scale-90;
+}

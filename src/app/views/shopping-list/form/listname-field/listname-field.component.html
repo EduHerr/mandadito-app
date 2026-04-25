@@ -3,8 +3,10 @@
 <span
   class="name-view"
   (click)="startEdit()"
+  title="Toca para editar el nombre"
 >
   {{ name }}
+  <i class="bi bi-pencil-fill edit-hint"></i>
 </span>
 }
 @else{
@@ -13,12 +15,10 @@
     #nameInput
     class="name-input"
     [(ngModel)]="tempName"
+    (blur)="confirmEdit()"
     (keydown)="handleKey($event)"
     type="text"
+    maxlength="40"
   />
-
-  <button class="close-btn" (click)="cancelEdit()">
-    ✕
-  </button>
 </div>
 }

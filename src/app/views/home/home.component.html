@@ -1,1 +1,61 @@
-<p>Home view</p>
+<div class="home-container flex flex-col flex-1 min-h-0 pb-4 gap-5">
+  <!-- Fixed top section: header, stats, FAB -->
+  <div class="flex-shrink-0">
+    <header class="home-header animate-fade-in-up">
+      <span class="greeting-emoji">🛒</span>
+      <h1 class="greeting">{{ greeting }}</h1>
+      <p class="subtitle">Organiza tu próximo mandado</p>
+    </header>
+
+    <div class="stats-card animate-fade-in-up" style="animation-delay: 0.08s">
+      <div class="stat-item">
+        <span class="stat-number">{{ totalLists }}</span>
+        <span class="stat-label">{{ totalLists === 1 ? 'Lista' : 'Listas' }} guardadas</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item clickable" (click)="navigateToHistorical()">
+        <i class="bi bi-clock-history stat-icon"></i>
+        <span class="stat-label">Ver historial</span>
+      </div>
+    </div>
+
+    <button class="fab-new-list animate-fade-in-up" style="animation-delay: 0.16s" (click)="navigateToNewList()">
+      <i class="bi bi-plus-lg"></i>
+      <span>Nueva Lista</span>
+    </button>
+  </div>
+
+  <!-- Scrollable recent lists -->
+  <div class="flex-1 overflow-y-auto -mx-1 px-1">
+    @if(recentLists.length > 0){
+    <section class="recent-section animate-fade-in-up" style="animation-delay: 0.24s">
+      <h2 class="section-title">Listas recientes</h2>
+      <div class="recent-grid">
+        @for(list of recentLists; track list._id){
+        <div class="recent-card" (click)="navigateToList(list._id)">
+          <div class="recent-card-header">
+            <span class="recent-alias">{{ list.alias || 'Sin nombre' }}</span>
+            <i class="bi bi-chevron-right text-stone-400"></i>
+          </div>
+          <div class="recent-card-body">
+            <span class="recent-meta">
+              <i class="bi bi-box-seam"></i>
+              {{ list.products.length }} {{ list.products.length === 1 ? 'producto' : 'productos' }}
+            </span>
+            <span class="recent-total">
+              ${{ getProductsTotal(list) | number:'1.0-2' }}
+            </span>
+          </div>
+        </div>
+        }
+      </div>
+    </section>
+    } @else {
+    <div class="empty-state animate-fade-in-up" style="animation-delay: 0.24s">
+      <i class="bi bi-cart3 empty-icon"></i>
+      <p class="empty-title">Aún no tienes listas</p>
+      <p class="empty-subtitle">Crea tu primera lista de compras y empieza a organizar tus mandados</p>
+    </div>
+    }
+  </div>
+</div>

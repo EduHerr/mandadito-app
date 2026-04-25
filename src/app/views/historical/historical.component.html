@@ -1,0 +1,16 @@
+<div class="flex flex-col flex-1 min-h-0 animate-fade-in-up">
+  <!-- Header: se mantiene fijo arriba -->
+  <div class="flex-shrink-0 historical-header">
+    <h1 class="page-title">
+      <i class="bi bi-clock-history title-icon"></i>
+      Mis Listas
+    </h1>
+  </div>
+
+  <!-- List: scrollea independientemente -->
+  <div class="flex-1 overflow-y-auto mt-4 -mx-1 px-1">
+    <table-historical
+      [shoppingLists]="shopingList"
+    ></table-historical>
+  </div>
+</div>
