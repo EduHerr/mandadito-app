@@ -2,6 +2,36 @@
     @apply flex flex-col gap-2;
 }
 
+.list-toolbar {
+    @apply
+    flex items-center justify-between
+    mb-2
+    px-1;
+}
+
+.list-toolbar-count {
+    @apply text-xs font-medium text-stone-400;
+}
+
+button.btn-share {
+    @apply
+    inline-flex items-center gap-1.5
+    px-3 py-1.5
+    bg-gradient-to-r from-orange-500 to-orange-600
+    hover:from-orange-600 hover:to-orange-700
+    text-white
+    text-xs font-semibold
+    rounded-lg
+    border-0
+    shadow-sm shadow-orange-200
+    transition-all duration-200
+    active:scale-95;
+}
+
+button.btn-share i {
+    @apply text-xs;
+}
+
 .product-card {
     @apply
     flex items-center justify-between

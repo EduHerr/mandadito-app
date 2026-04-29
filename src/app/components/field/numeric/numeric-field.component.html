@@ -2,14 +2,15 @@
     #inpNumeric
     [id]="id"
     type="text"
+    inputmode="decimal"
     [placeholder]="placeholder"
     [min]="min"
     [max]="max"
+    [class.field-error]="error"
     [(ngModel)]="value"
-    (keypress)="allowOnlyNumbers($event)"
-    (keypress)="allowLength($event, inpNumeric)"
+    (input)="onInput($event)"
 />
-@if(error && (errorMessage || errorMessage != '')){
+@if(error && errorMessage){
     <span class="error-label">
         {{ errorMessage }}
     </span>

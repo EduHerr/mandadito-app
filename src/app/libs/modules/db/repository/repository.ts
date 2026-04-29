@@ -24,6 +24,10 @@ export abstract class Repository<T, ID> implements IRepository<T, ID> {
     return await this.findById(_id);
   }
 
+  async addWithId(item: T): Promise<void> {
+    await this.table.add(item);
+  }
+
   async update(id: ID, changes: UpdateSpec<T>): Promise<T> {
     await this.table.update(id, {
       ...changes, 

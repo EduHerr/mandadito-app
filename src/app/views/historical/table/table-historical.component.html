@@ -1,7 +1,7 @@
 <!-- Historical lists as cards -->
 <div class="list-container">
   @if(shoppingLists.length > 0){
-    @for(item of shoppingLists; track $index){
+    @for(item of shoppingLists; track item._id){
     <div class="list-card animate-fade-in-up" [style.animation-delay.ms]="$index * 60">
       <div class="list-card-content" (click)="onEdit(`${item._id}`)">
         <div class="list-header-row">
@@ -19,6 +19,14 @@
         </div>
       </div>
       <div class="list-actions">
+        <button
+          type="button"
+          class="action-btn share-btn"
+          title="Compartir"
+          (click)="shareItem(item)"
+        >
+          <i class="bi bi-share"></i>
+        </button>
         <button
           type="button"
           class="action-btn edit-btn"

@@ -13,6 +13,7 @@
     <table-shopping-list
       (oDelete)="drop($event)"
       (oEdit)="edit($event)"
+      (oShare)="shareList()"
       [products]="items"
     ></table-shopping-list>
   </div>
