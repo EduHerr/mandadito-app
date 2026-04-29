@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { FormShoppingList } from './form/form-shopping-list.component';
 import { TableShoppingList } from './table/table-shopping-list.component';
 import { IProductSchema } from '@libs/modules/persistent/products/schema';
@@ -27,8 +27,6 @@ export class ShoppingListView implements AfterViewInit {
     private readonly shoppinListService: ShoppingListaService,
     private readonly toastService: ToastService,
     private readonly route: ActivatedRoute,
-    private readonly ngZone: NgZone,
-    private readonly cdr: ChangeDetectorRef
   ) {}
 
   async ngAfterViewInit(): Promise<void> {
@@ -43,12 +41,11 @@ export class ShoppingListView implements AfterViewInit {
       if (shoppinList) {
         const nameField = this.formComponent.lstNameField.name;
 
-        shoppinList.products.map(
-          (item) => (this.formComponent.totalCost += item.totalCost ?? 0)
+        this.formComponent.totalCost = shoppinList.products.reduce(
+          (sum, item) => sum + (item.totalCost ?? 0),
+          0
         );
-        this.ngZone.run(() => {
-          this.items = shoppinList.products;
-        });
+        this.items = shoppinList.products;
         this.formComponent.lstNameField.name = shoppinList.alias
           ? shoppinList.alias
           : nameField;
@@ -114,7 +111,6 @@ export class ShoppingListView implements AfterViewInit {
 
   addProduct(item: IProductSchema) {
     this.items = [item, ...this.items];
-    this.cdr.detectChanges();
     this.toastService.show({
       type: EToastType.SUCCESS,
       text: 'Producto agregado a la lista',
