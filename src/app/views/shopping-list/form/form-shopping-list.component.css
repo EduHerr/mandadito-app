@@ -32,8 +32,20 @@
 }
 
 /* ── Input Groups ── */
+.form-control {
+    @apply flex flex-col;
+}
+
 .input-group {
-    @apply relative flex items-center;
+    @apply relative flex items-center transition-all duration-200;
+}
+
+.input-group.field-error {
+    @apply rounded-xl;
+}
+
+.input-group.field-error .input-icon {
+    @apply text-red-400;
 }
 
 .input-icon {
@@ -42,7 +54,8 @@
     text-orange-300
     text-sm
     z-10
-    pointer-events-none;
+    pointer-events-none
+    transition-colors duration-200;
 }
 
 .input-group input,

@@ -36,6 +36,8 @@ export class FormShoppingList implements OnInit {
   totalCost: number = 0;
   editMode: boolean = false;
   productItem!: IProductSchema;
+  shakeForm: boolean = false;
+  numericErrors: Record<string, boolean> = {};
 
   constructor(
     private fb: FormBuilder,
@@ -65,36 +67,82 @@ export class FormShoppingList implements OnInit {
     });
   }
 
-  async onAdd(): Promise<void> {
+  /** Triggers the shake animation on the form, auto-clears after animation ends */
+  private triggerShake(): void {
+    this.shakeForm = false;
+    // Force reflow so the animation can replay
+    requestAnimationFrame(() => {
+      this.shakeForm = true;
+      setTimeout(() => this.shakeForm = false, 500);
+    });
+  }
+
+  /** Validates all fields (reactive form + numeric), returns true if valid */
+  private validateAll(): boolean {
+    let valid = true;
+
+    // Validate reactive form fields
     if (this.fShoppingList.invalid) {
       this.fShoppingList.markAllAsTouched();
       this.fShoppingList.markAsDirty();
-      return;
+      valid = false;
     }
+
+    // Validate numeric fields
+    const fields = this.numericFields.toArray();
+    this.numericErrors = {};
+
+    fields.forEach((field) => {
+      if (!field.isValid()) {
+        const label = field.id === 'cantiadadField' ? 'quantity' : 'price';
+        const msg = field.id === 'cantiadadField' ? 'Ingresa la cantidad' : 'Ingresa el precio';
+        field.markError(msg);
+        this.numericErrors[label] = true;
+        valid = false;
+      } else {
+        field.clearError();
+      }
+    });
+
+    if (!valid) {
+      this.triggerShake();
+    }
+
+    return valid;
+  }
+
+  async onAdd(): Promise<void> {
+    if (!this.validateAll()) return;
 
     // Get value from numeric fields
     const [quantity, unit_cost] = this.numericFields.toArray().map(field => field.value);
     const cantidad = Number(quantity);
     const costoUnitario = Number(unit_cost);
 
-    const costoTotal = Number(quantity) * Number(unit_cost);
+    const costoTotal = cantidad * costoUnitario;
     this.totalCost += costoTotal;
 
-    // Mapping the product
+    // Build complete product with local ID for immediate UI update
     const product: IProductSchema = {
+      _id: crypto.randomUUID(),
       quantity: cantidad,
       unit_cost: costoUnitario,
-      totalCost: cantidad * costoUnitario,
+      totalCost: costoTotal,
+      lastUpdated: Date.now(),
       ...this.fShoppingList.value
     };
-    
-    //Save the product in the db
-    const added = await this.productService.add(product);
 
-    //
-    this.oAddProduct.emit(added);
+    // Emit FIRST — synchronous, within Angular's zone (guaranteed render)
+    this.oAddProduct.emit(product);
     this.clearNumericFields();
     this.fShoppingList.reset();
+
+    // Save to DB in background (optimistic update)
+    try {
+      await this.productService.addWithId(product);
+    } catch (err) {
+      console.error('Error saving product to DB:', err);
+    }
   }
 
   onSave(): void {
@@ -113,15 +161,12 @@ export class FormShoppingList implements OnInit {
         field.value = product?.unit_cost?.toString() ?? '0';
       }
     });
+    // Clear any stale errors
+    this.numericErrors = {};
   }
 
   async onUpdate(): Promise<void> {
-    //Validate form
-    if (this.fShoppingList.invalid) {
-      this.fShoppingList.markAllAsTouched();
-      this.fShoppingList.markAsDirty();
-      return;
-    }
+    if (!this.validateAll()) return;
 
     //Update
     let [quantity, unit_cost] = this.numericFields.toArray().map(field => field.value);
@@ -129,12 +174,21 @@ export class FormShoppingList implements OnInit {
     const costoUnitario = Number(unit_cost);
     const costoTotal = Number(cantidad) * Number(costoUnitario);
 
-    const updated = await this.productService.update(`${this.productItem._id}`, {
-      ...this.fShoppingList.value,
+    // Snapshot form values before reset (DB write happens after reset)
+    const formValue = this.fShoppingList.value;
+    const productId = `${this.productItem._id}`;
+
+    // Build updated product locally for immediate UI update
+    const updated: IProductSchema = {
+      ...this.productItem,
+      ...formValue,
       quantity: cantidad,
       unit_cost: costoUnitario,
-      totalCost: costoTotal
-    });
+      totalCost: costoTotal,
+      lastUpdated: Date.now(),
+    };
+
+    // Emit FIRST — synchronous, within Angular's zone (guaranteed render)
     this.oUpdateProduct.emit(updated);
 
     //Update totalCost
@@ -145,9 +199,25 @@ export class FormShoppingList implements OnInit {
     this.editMode = false;
     this.fShoppingList.reset();
     this.clearNumericFields();
+
+    // Persist to DB in background (optimistic update)
+    try {
+      await this.productService.update(productId, {
+        ...formValue,
+        quantity: cantidad,
+        unit_cost: costoUnitario,
+        totalCost: costoTotal,
+      });
+    } catch (err) {
+      console.error('Error updating product in DB:', err);
+    }
   }
 
   private clearNumericFields(): void {
-    this.numericFields.forEach((field) => field.value = "");
+    this.numericErrors = {};
+    this.numericFields.forEach((field) => {
+      field.value = "";
+      field.clearError();
+    });
   }
 }

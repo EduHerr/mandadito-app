@@ -1,4 +1,4 @@
-<form [formGroup]="fShoppingList" class="form-card">
+<form [formGroup]="fShoppingList" class="form-card" [class.animate-shake]="shakeForm">
   <!-- Header: Name + Total -->
   <div class="form-header">
     <listname-field></listname-field>
@@ -14,12 +14,23 @@
       <i class="bi bi-tag input-icon"></i>
       <input type="text" placeholder="Nombre del producto" formControlName="name" />
     </div>
+    @if(fShoppingList.get('name')?.invalid && fShoppingList.get('name')?.touched){
+      <span class="error-label">
+        @if(fShoppingList.get('name')?.errors?.['required']){
+          El nombre del producto es obligatorio
+        } @else if(fShoppingList.get('name')?.errors?.['minlength']){
+          Mínimo 2 caracteres
+        } @else if(fShoppingList.get('name')?.errors?.['pattern']){
+          Solo se permiten letras y espacios
+        }
+      </span>
+    }
   </div>
 
   <!-- Quantity + Unit cost -->
   <div class="grid grid-cols-2 gap-3">
     <div class="form-control">
-      <div class="input-group">
+      <div class="input-group" [class.field-error]="cantiadadField.error">
         <i class="bi bi-hash input-icon"></i>
         <numeric-field
           #cantiadadField
@@ -27,11 +38,12 @@
           [min]="1"
           [max]="1000"
           [placeholder]="'Cantidad'"
+          [required]="true"
         ></numeric-field>
       </div>
     </div>
     <div class="form-control">
-      <div class="input-group">
+      <div class="input-group" [class.field-error]="unitCostField.error">
         <i class="bi bi-currency-dollar input-icon"></i>
         <numeric-field
           #unitCostField
@@ -39,6 +51,7 @@
           [min]="1"
           [max]="100000"
           [placeholder]="'Precio'"
+          [required]="true"
         ></numeric-field>
       </div>
     </div>
@@ -51,6 +64,15 @@
       formControlName="description"
       rows="2"
     ></textarea>
+    @if(fShoppingList.get('description')?.invalid && fShoppingList.get('description')?.touched){
+      <span class="error-label">
+        @if(fShoppingList.get('description')?.errors?.['minlength']){
+          Mínimo 5 caracteres
+        } @else if(fShoppingList.get('description')?.errors?.['pattern']){
+          Caracteres no válidos en la descripción
+        }
+      </span>
+    }
   </div>
 
   <!-- Promo Toggle -->

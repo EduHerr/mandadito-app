@@ -87,6 +87,10 @@ button.edit-btn {
     @apply bg-amber-50 text-amber-600 hover:bg-amber-100;
 }
 
+button.share-btn {
+    @apply bg-orange-50 text-orange-500 hover:bg-orange-100;
+}
+
 /* ── Empty State ── */
 .empty-state {
     @apply

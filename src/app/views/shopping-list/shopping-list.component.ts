@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormShoppingList } from './form/form-shopping-list.component';
 import { TableShoppingList } from './table/table-shopping-list.component';
 import { IProductSchema } from '@libs/modules/persistent/products/schema';
@@ -15,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   providers: [ProductService, ShoppingListaService],
   templateUrl: './shopping-list.component.html',
 })
-export class ShoppingListView implements OnInit {
+export class ShoppingListView implements AfterViewInit {
   @ViewChild(FormShoppingList) formComponent!: FormShoppingList;
   @ViewChild(TableShoppingList) tableComponent!: TableShoppingList;
 
@@ -26,10 +26,12 @@ export class ShoppingListView implements OnInit {
     private readonly productService: ProductService,
     private readonly shoppinListService: ShoppingListaService,
     private readonly toastService: ToastService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly ngZone: NgZone,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
-  async ngOnInit(): Promise<void> {
+  async ngAfterViewInit(): Promise<void> {
     this.id = this.route.snapshot.paramMap.get('id');
 
     //Details by shopping-list
@@ -44,7 +46,9 @@ export class ShoppingListView implements OnInit {
         shoppinList.products.map(
           (item) => (this.formComponent.totalCost += item.totalCost ?? 0)
         );
-        this.items = shoppinList.products;
+        this.ngZone.run(() => {
+          this.items = shoppinList.products;
+        });
         this.formComponent.lstNameField.name = shoppinList.alias
           ? shoppinList.alias
           : nameField;
@@ -109,7 +113,8 @@ export class ShoppingListView implements OnInit {
   }
 
   addProduct(item: IProductSchema) {
-    this.items.unshift(item);
+    this.items = [item, ...this.items];
+    this.cdr.detectChanges();
     this.toastService.show({
       type: EToastType.SUCCESS,
       text: 'Producto agregado a la lista',
@@ -139,17 +144,69 @@ export class ShoppingListView implements OnInit {
   }
 
   updateProduct(updatedProduct: IProductSchema) {
-    this.items = this.items.map((item) => {
-      if (item._id === updatedProduct._id) {
-        return updatedProduct;
-      }
-      return item;
-    });
-    this.tableComponent.isEdit = false;
+    // Recalculate totalCost from scratch using the new array
+    this.items = this.items.map((item) =>
+      item._id === updatedProduct._id ? updatedProduct : item
+    );
     this.toastService.show({
       type: EToastType.SUCCESS,
       text: 'Producto actualizado',
       duration: 3000,
     });
+  }
+
+  async shareList(): Promise<void> {
+    if (this.items.length === 0) {
+      this.toastService.show({
+        type: EToastType.ERROR,
+        text: 'Agrega productos antes de compartir',
+        duration: 3000,
+      });
+      return;
+    }
+
+    const listName = this.formComponent.lstNameField?.name ?? 'Mi Lista';
+    const total = this.formComponent.totalCost;
+
+    // Build a readable text summary
+    const lines = this.items.map(
+      (p, i) => `${i + 1}. ${p.name} — ${p.quantity} uds × $${p.unit_cost} = $${(p.totalCost ?? 0).toFixed(2)}`
+    );
+
+    const text = [
+      `🛒 *${listName}*`,
+      '',
+      ...lines,
+      '',
+      `💰 *Total: $${total.toFixed(2)}*`,
+      '',
+      '— Compartido desde Mandadito 🍊',
+    ].join('\n');
+
+    // Use Web Share API (WhatsApp, Telegram, etc.) on supported devices
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: listName, text });
+        return;
+      } catch (err) {
+        // User cancelled or API failed — fall through to clipboard
+      }
+    }
+
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(text);
+      this.toastService.show({
+        type: EToastType.SUCCESS,
+        text: 'Lista copiada al portapapeles',
+        duration: 3000,
+      });
+    } catch {
+      this.toastService.show({
+        type: EToastType.ERROR,
+        text: 'No se pudo compartir la lista',
+        duration: 3000,
+      });
+    }
   }
 }

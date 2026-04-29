@@ -14,6 +14,10 @@ export class ProductService {
         return await this.productRepository.add(product);
     }
 
+    async addWithId(product: IProductSchema){
+        return await this.productRepository.addWithId(product);
+    }
+
     async get(){
         return await this.productRepository.get();
     }

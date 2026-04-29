@@ -17,8 +17,8 @@ export class TableShoppingList{
     @Input() products: IProductSchema[] = [];
     @Output() oDelete = new EventEmitter<string>();
     @Output() oEdit = new EventEmitter<string>();
+    @Output() oShare = new EventEmitter<void>();
 
-    isEdit: boolean = false;
     dateTime = DateTime;
 
     eDrop(id: string){
@@ -27,6 +27,9 @@ export class TableShoppingList{
 
     onEdit(id: string){
         this.oEdit.emit(id);
-        this.isEdit = true;
+    }
+
+    share(){
+        this.oShare.emit();
     }
 }

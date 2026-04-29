@@ -1,7 +1,14 @@
 <!-- Mobile: Cards / Desktop: Table -->
 <div class="product-list">
   @if(products.length > 0){
-    @for(product of products; track $index){
+    <div class="list-toolbar">
+      <span class="list-toolbar-count">{{ products.length }} {{ products.length === 1 ? 'producto' : 'productos' }}</span>
+      <button type="button" class="btn-share" title="Compartir lista" (click)="share()">
+        <i class="bi bi-share-fill"></i>
+        <span>Compartir</span>
+      </button>
+    </div>
+    @for(product of products; track product._id){
     <div class="product-card animate-fade-in-up" [class.product-promo]="product.isPromo" [style.animation-delay.ms]="$index * 50">
       <div class="product-info">
         <div class="product-header">
@@ -32,7 +39,6 @@
         </div>
       </div>
       <div class="product-actions">
-        @if(!isEdit){
         <button
           type="button"
           class="action-btn edit-btn"
@@ -42,7 +48,6 @@
           <i class="bi bi-pencil"></i>
         </button>
         <btn-delete (oConfirm)="eDrop(`${product._id}`)"></btn-delete>
-        }
       </div>
     </div>
     }
